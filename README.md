@@ -20,33 +20,35 @@
 - Windows
 - Rust 工具链（建议 stable 最新版）
 - Android ADB 环境（设备已开启 USB 调试）
-- 本地可访问的 LLM API（默认地址见 src/main.rs）
+- 本地可访问的 LLM API（默认地址见 `src/main.rs`）
 
 ## 目录说明
 
-- src/: Rust 主程序
-- resource/: MAA 资源与流水线
-- config/: 运行时配置目录（运行后可能自动生成）
-- debug/: 运行时调试输出目录
-- MAA-win-x86_64-v5.9.0/: MAA SDK 与运行库
+- `src/`: Rust 主程序
+- `resource/`: MAA 资源与流水线
+- `MAA-win-x86_64-v5.9.0/`: MAA SDK 与运行库
 
 ## 使用方式
 
 1. 安装依赖并确认 ADB 可用
 
-    rustup toolchain install stable
-    cargo --version
-    adb devices
+```bash
+rustup toolchain install stable
+cargo --version
+adb devices
+```
 
 2. 启动本地 LLM 服务（确保与代码中的接口一致）
 
     默认接口:
-    - LLM_API_BASE: http://localhost:11434/api/generate
-    - LLM_MODEL: deepseek-v3.1:671b-cloud
+    - LLM_API_BASE: [http://localhost:11434/api/generate]
+    - LLM_MODEL: `deepseek-v3.1:671b-cloud`
 
 3. 在项目根目录运行
 
-    cargo run
+```bash
+cargo run
+```
 
 ## 可配置项
 
