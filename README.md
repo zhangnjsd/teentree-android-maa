@@ -73,3 +73,9 @@
   - 确认 LLM 服务已启动
   - 确认接口路径与模型名正确
   - 检查本机防火墙或端口占用
+
+## 开源框架
+
+- [MAA Framework](https://github.com/MaaXYZ/MaaFramework)
+- [MAA Framework Rust crate](https://github.com/MaaXYZ/maa-framework-rs)
+- [MAA Framework Rust crate (crates.io)](https://crates.io/crates/maa-framework)
