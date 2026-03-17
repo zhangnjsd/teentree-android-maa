@@ -1,0 +1,83 @@
+{
+    "Startup": {
+        "timeout": -1,
+        "rate_limit": 500,
+        "focus": "log",
+        "attach": {
+            "debug_node": "Startup"
+        },
+        "on_error": [
+            "DebugReturn"
+        ],
+        "next": [
+            "ClickContinueStudy",
+            "ClickPlay"
+        ]
+    },
+
+    "ClickContinueStudy": {
+        "recognition": "OCR",
+        "expected": ["继续学习", "继续学习>"],
+        "order_by": "Vertical",
+        "action": "Click",
+        "timeout": 1500,
+        "focus": "log",
+        "attach": {
+            "debug_node": "ClickContinueStudy"
+        },
+        "on_error": [
+            "WaitForQuiz"
+        ],
+        "post_wait_freezes": 500,
+        "next": [
+            "WaitForQuiz"
+        ]
+    },
+
+    "ClickPlay": {
+        "recognition": "TemplateMatch",
+        "template": ["play1.jpg", "play2.jpg"],
+        "action": "Click",
+        "timeout": -1,
+        "focus": "log",
+        "threshold": 0.5,
+        "attach": {
+            "debug_node": "ClickPlay"
+        },
+        "on_error": [
+            "WaitForQuiz"
+        ],
+        "post_wait_freezes": 500,
+        "next": [
+            "WaitForQuiz"
+        ]
+    },
+
+    "WaitForQuiz": {
+        "recognition": "OCR",
+        "expected": ["巩固知识点", "不会影响到", "上一题", "下一题", "关闭"],
+        "order_by": "Vertical",
+        "timeout": -1,
+        "rate_limit": 500,
+        "action": "DoNothing",
+        "next": [
+            "WaitForQuiz"
+        ],
+        "focus": "log",
+        "attach": {
+            "debug_node": "WaitForQuiz"
+        },
+        "on_error": [
+            "WaitForQuiz"
+        ]
+    },
+
+    "DebugReturn": {
+        "action": "StopTask",
+        "focus": "log",
+        "attach": {
+            "debug_node": "DebugReturn",
+            "reason": "on_error fallback"
+        }
+    }
+}

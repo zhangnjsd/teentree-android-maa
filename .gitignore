@@ -1,0 +1,24 @@
+# Rust build outputs
+/target/
+/Cargo.lock
+
+# MAA package: keep root files, ignore internal subfolders
+/MAA*/sample/
+/MAA*/docs/
+
+# Local editor/workspace files
+/.vscode/
+
+# Runtime-generated local data
+/config/
+/debug/
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+
+# OS-specific files
+Thumbs.db
+Desktop.ini
+.DS_Store
