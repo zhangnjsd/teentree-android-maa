@@ -55,7 +55,7 @@
 
     "WaitForQuiz": {
         "recognition": "OCR",
-        "expected": ["巩固知识点", "不会影响到", "上一题", "下一题", "关闭"],
+        "expected": ["巩固知识点", "不会影响到", "上一题", "下一题", "关闭", "单元测试", "选择题选项顺序为随机排序"],
         "order_by": "Vertical",
         "timeout": -1,
         "rate_limit": 500,
