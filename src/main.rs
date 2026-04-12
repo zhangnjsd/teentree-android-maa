@@ -14,7 +14,7 @@ use std::time::{Duration, Instant};
 
 const LLM_API_KEY: &str = "";
 const LLM_API_BASE: &str = "http://localhost:11434/api/generate";
-const LLM_MODEL: &str = "deepseek-v3.1:671b-cloud";
+const LLM_MODEL: &str = "gpt-oss:120b-cloud";
 const LLM_TIMEOUT_SECS: u64 = 30;
 const REPEAT_SUBMIT_MIN_STREAK: u8 = 3;
 const REPEAT_SUBMIT_MIN_WINDOW_MS: u128 = 1200;
@@ -97,8 +97,9 @@ fn collect_ocr_entries(detail: &serde_json::Value) -> Vec<OcrEntry> {
 }
 
 fn clip_quiz_window(entries: &[OcrEntry]) -> Vec<OcrEntry> {
-    let start = entries.iter().position(|e| e.text.contains("关闭")
-        || e.text.contains("提交作业"));
+    let start = entries
+        .iter()
+        .position(|e| e.text.contains("关闭") || e.text.contains("提交作业"));
     let end = entries.iter().position(|e| e.text.contains("下一题"));
 
     match (start, end) {
@@ -124,7 +125,7 @@ fn has_quiz_keywords(texts: &[String]) -> bool {
         "下一题",
         "关闭",
         "判断题",
-        "单元测试", 
+        "单元测试",
         "选择题选项顺序为随机排序",
     ];
     texts
@@ -133,11 +134,9 @@ fn has_quiz_keywords(texts: &[String]) -> bool {
 }
 
 fn has_correct_result_keywords(texts: &[String]) -> bool {
-    texts
-        .iter()
-        .any(|line| line.contains("正确答案") 
-            || line.contains("回答正确")
-            || line.contains("是最后"))
+    texts.iter().any(|line| {
+        line.contains("正确答案") || line.contains("回答正确") || line.contains("是最后")
+    })
 }
 
 fn detect_question_type(texts: &[String]) -> QuestionType {
@@ -153,15 +152,14 @@ fn detect_question_type(texts: &[String]) -> QuestionType {
 }
 
 fn normalize_answer_keyword(raw: &str) -> String {
-    raw
-        .trim_matches(|c: char| {
-            c.is_whitespace()
-                || matches!(
-                    c,
-                    ':' | '：' | ',' | '，' | ';' | '；' | '.' | '。' | '"' | '\''
-                )
-        })
-        .to_string()
+    raw.trim_matches(|c: char| {
+        c.is_whitespace()
+            || matches!(
+                c,
+                ':' | '：' | ',' | '，' | ';' | '；' | '.' | '。' | '"' | '\''
+            )
+    })
+    .to_string()
 }
 
 fn normalize_for_match(raw: &str) -> String {
@@ -287,7 +285,8 @@ fn derive_option_keyword(option_text: &str) -> String {
     let start = chars.len().saturating_sub(6);
     let mut tail = chars[start..].iter().collect::<String>();
     while let Some(first) = tail.chars().next() {
-        if matches!(first, '的' | '和' | '与' | '及' | '并' | '在') && tail.chars().count() > 2 {
+        if matches!(first, '的' | '和' | '与' | '及' | '并' | '在') && tail.chars().count() > 2
+        {
             tail = tail.chars().skip(1).collect();
         } else {
             break;
